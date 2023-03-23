@@ -19,7 +19,7 @@ fn main() {
 
     let runtime = Arc::new(runtime::Builder::new_multi_thread().enable_all().build().expect("runtime error"));
     let logger: &'static Logger = fast_log::init(Config::new().console().file_split(
-       "/var/log/neon/geyser.log",
+       "/var/log/fast_log_test/fast_log.log",
             LogSize::KB(10),
         RollingType::All,
         LogPacker{}
@@ -46,7 +46,7 @@ fn main() {
     let mut file_watcher: Box<dyn Watcher> =
         Box::new(RecommendedWatcher::new(file_watcher_tx.clone(), notify::Config::default()).unwrap());
     file_watcher
-        .watch(Path::new("/var/log/neon"), RecursiveMode::Recursive)
+        .watch(Path::new("/var/log/fast_log_test"), RecursiveMode::Recursive)
         .unwrap();
     let file_watcher_handle = runtime.spawn(file_watch(file_watcher_rx));
 
